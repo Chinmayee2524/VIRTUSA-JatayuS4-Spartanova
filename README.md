@@ -49,6 +49,7 @@ npm install
 npm run dev
 
 ---
+```
 
 DATABASE_URL=postgresql://<username>:<password>@localhost:5432/<your_db>
 PORT=5000
