@@ -1,0 +1,163 @@
+
+✅ ECO-FRIENDLY PRODUCT RECOMMENDATION SYSTEM — MVP SPEC
+🔧 ADMIN FLOW
+Dataset Upload: I have attached the dataset here.
+
+
+Trigger Hybrid Scoring (only if eco_score column is empty):
+
+
+Score 29,000 products using Mistral-7B.
+
+
+Select top 5,000.
+
+
+Re-score them using LLaMA-2.
+
+
+Final dataset is saved in PostgreSQL.
+
+
+
+👤 USER FLOW
+1. User Onboarding
+Sign Up: name, email, password, age, gender → stored in DB.
+
+
+Login: email, password → authenticated via Flask sessions.
+
+
+2. Homepage Recommendations
+Cold Start: Based on age & gender (for new users).
+
+
+Personalized: Based on age, gender + session activity:
+
+
+Viewed log
+
+
+Wishlist
+
+
+Cart
+
+
+3. Activity Tracking
+Every click:
+
+
+Adds to viewed_products (session + DB).
+
+
+Wishlist/Cart:
+
+
+Updates both session (temporary) and PostgreSQL (permanent).
+
+
+
+🔍 SEARCH FUNCTIONALITY
+Search Bar (on homepage):
+
+
+Search by title or user review (text)
+
+
+Case-insensitive, supports partial match
+
+
+Backend: SQL ILIKE or full-text search
+
+
+Filters by user context (cold start or personalized)
+
+
+
+🧠 FEATURES SUMMARY
+🔐 Auth: Sign Up/Login using Flask + PostgreSQL
+
+
+🧊 Cold Start: Recommendations based on age/gender
+
+
+🧠 Personalized Feed: Based on interactions + profile
+
+
+🛒 Track user actions: Viewed, Cart, Wishlist (session + DB)
+
+
+🔍 Search: Product title or review
+
+
+👤 Profile Display: name, email, age, gender, cart/wishlist/logout links
+
+
+
+🧰 TECH STACK
+Backend: Flask (Python)
+
+
+Session management, user actions, scoring endpoints
+
+
+Database: PostgreSQL
+
+
+Tables: users, products, viewed_log, cart, wishlist
+
+
+Frontend: React.js
+
+
+Routes: /signup, /login, /homepage, /profile
+
+
+Components: Product Card, Search Bar, Profile Section
+
+
+
+🖼️ UI REQUIREMENTS
+Product Card (Grid View)
+Title, Eco Score, Snippet of Review
+
+
+Optional: Category, Price, Image
+
+
+Buttons: Add to Cart, Add to Wishlist
+
+
+User Profile (top bar or sidebar)
+Name, Email, Age, Gender
+
+
+Links: My Cart, My Wishlist, Logout
+
+
+Search Bar
+Prominently displayed on homepage
+
+
+
+📦 DATABASE STRUCTURE
+Products Table
+product_id, title, text, eco_score, age_target, gender_target, category
+
+
+Users Table
+id, name, email, password, age, gender
+
+
+Session Tables
+user_id, viewed_products, cart_items, wishlist_items
+
+
+
+Please prioritize building out the search functionality for the MVP. This should allow users to search products using either the product title or keywords found in the user review text (text column). The search should be case-insensitive, support partial keyword matching, and ideally leverage either ILIKE or full-text search capabilities from PostgreSQL for efficiency.
+In addition to the search, we need a basic User Section. This includes Sign Up and Login using Flask sessions, and once the user is logged in, they should see a profile section (preferably on the top bar or sidebar) showing their name, email, age, and gender. Quick links to Cart, Wishlist, and Logout should also be part of this section.
+For new users (i.e., those who have no prior activity), the homepage should recommend products based on the user’s age and gender. These fields will be collected during signup and matched against the age and gender columns already available in the dataset I've provided.
+The goal is to ensure that even first-time users immediately see relevant, personalized recommendations based on the demographic data collected during onboarding.
+
+
